@@ -1,0 +1,230 @@
+/* ---------- Màu sắc: lấy từ khu vườn, mặt ao, gỗ và hoa dâm bụt ---------- */
+:root {
+  --bg: #E7EDE4;
+  --surface: #F6F8F3;
+  --ink: #1E2F27;
+  --muted: #55675D;
+  --line: #C5D1C6;
+  --accent: #B8322A;      /* đỏ hoa dâm bụt */
+  --leaf: #4E7C5F;
+  --leaf-soft: #BFD3C1;
+  --water: #8DB7B0;
+  --water-line: #6E9E97;
+  --wood: #8A6240;
+  --wood-dark: #5E4029;
+  --roof: #9C5A3F;
+  --roof-line: #7E4631;
+  --blind: #D8BB78;
+  --interior: #F1E3C4;
+  --paper: #FFFDF6;
+  --ground: #B9AD8C;
+  --fish: #D9772B;
+  --metal: #3B4742;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #121C17;
+    --surface: #1B2922;
+    --ink: #E4ECE5;
+    --muted: #9DB0A5;
+    --line: #2E4037;
+    --accent: #E8665B;
+    --leaf: #3F6B52;
+    --leaf-soft: #1F3329;
+    --water: #24484A;
+    --water-line: #3A6A6A;
+    --wood: #7A573A;
+    --wood-dark: #4A3222;
+    --roof: #7E4631;
+    --roof-line: #5F3323;
+    --blind: #B89B5C;
+    --interior: #E8CF8E;  /* phòng sáng đèn trong đêm */
+    --paper: #FFF8E2;
+    --ground: #4B4636;
+    --fish: #E08A3C;
+    --metal: #26302C;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121C17;
+  --surface: #1B2922;
+  --ink: #E4ECE5;
+  --muted: #9DB0A5;
+  --line: #2E4037;
+  --accent: #E8665B;
+  --leaf: #3F6B52;
+  --leaf-soft: #1F3329;
+  --water: #24484A;
+  --water-line: #3A6A6A;
+  --wood: #7A573A;
+  --wood-dark: #4A3222;
+  --roof: #7E4631;
+  --roof-line: #5F3323;
+  --blind: #B89B5C;
+  --interior: #E8CF8E;
+  --paper: #FFF8E2;
+  --ground: #4B4636;
+  --fish: #E08A3C;
+  --metal: #26302C;
+}
+
+/* ---------- Nền tảng ---------- */
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.page {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+h1, h2 {
+  font-family: "Alegreya", Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0;
+}
+h1 { font-size: clamp(2rem, 8vw, 3rem); letter-spacing: -0.01em; }
+.lead { margin: 0.6rem 0 0; color: var(--muted); max-width: 34rem; }
+
+/* ---------- Bức vẽ ---------- */
+.scene-wrap { margin: 1.25rem -0.25rem 0; }
+.scene { display: block; width: 100%; height: auto; }
+
+.spot { cursor: pointer; outline: none; }
+.spot .hit { fill: transparent; }
+.spot .ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse 2.2s ease-out infinite;
+}
+.spot .dot { fill: var(--accent); stroke: var(--paper); stroke-width: 2; }
+.spot.seen .ring { animation: none; opacity: 0; }
+.spot.seen .dot { fill: var(--leaf); }
+.spot.active .ring { animation: none; opacity: 1; stroke-width: 3; }
+.spot:focus-visible .ring { animation: none; opacity: 1; stroke: var(--ink); stroke-width: 3; }
+@keyframes pulse {
+  0%   { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spot .ring { animation: none; }
+}
+
+/* ---------- Tiến độ ---------- */
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--line);
+  overflow: hidden;
+}
+.bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--leaf);
+  transition: width 0.3s ease;
+}
+
+/* ---------- Khung câu chuyện ---------- */
+.story {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  min-height: 9rem;
+}
+.story h2 { font-size: 1.6rem; }
+.story .where { margin: 0.2rem 0 0.7rem; color: var(--muted); font-size: 0.9rem; }
+.story p { margin: 0; }
+.story .lesson {
+  margin-top: 0.9rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line);
+  font-weight: 500;
+}
+.story .hint { color: var(--muted); }
+.next {
+  margin-top: 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--paper);
+  background: var(--leaf);
+  border: 0;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+.next:focus-visible, .chip:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+/* ---------- Danh sách hiện vật ---------- */
+.list-title { margin: 2rem 0 0.6rem; font-size: 1.25rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; margin: 0; list-style: none; }
+.chip {
+  font: inherit;
+  font-size: 0.92rem;
+  color: var(--ink);
+  background: transparent;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+.chip.seen { border-color: var(--leaf); }
+.chip.seen::before { content: "✓ "; color: var(--leaf); font-weight: 600; }
+.chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip.active::before { color: inherit; }
+
+.more { margin-top: 2.5rem; }
+.more h2 { font-size: 1.5rem; margin-bottom: 0.8rem; }
+.more p { margin: 0; }
+.timeline { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0.7rem 1rem; }
+.timeline dt {
+  font-family: "Alegreya", Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.3;
+  color: var(--accent);
+}
+.timeline dd { margin: 0; padding-bottom: 0.7rem; border-bottom: 1px solid var(--line); }
+.lessons { margin: 0; padding-left: 1.2rem; }
+.lessons li { margin-bottom: 0.6rem; }
+.lessons li::marker { color: var(--leaf); }
+
+footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+footer p { margin: 0 0 0.5rem; }
+footer .author { color: var(--ink); font-weight: 600; font-size: 0.95rem; }
